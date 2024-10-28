@@ -64,8 +64,22 @@
 
                             
                         @endif
-                        
+                         <!-- Edición de la respuesta si está en modo de edición -->
+                     @if ($answer->id == $answer_edit['id'])
+                     <form wire:submit.prevent="update">
+                         <textarea  wire:model="answer_edit.body" rows="2" class=" mt-1 border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm w-full resize-none" placeholder="Editar comentario"></textarea>
+ 
+                         <x-input-error for="answer_edit.body" class="mt-2"/>
+ 
+                         <div class="flex justify-end mt-2">
+                             <x-danger-button class="mr-2" wire:click="cancel">Cancelar</x-danger-button>
+                             <x-button>Actualizar</x-button>
+                         </div>
+
+                     </form>
+                     @endif
                     </div>
+                    
                     <x-dropdown>
                         <x-slot name="trigger">
                             <button type="button" class="text-gray-900 bg-gray-200 hover:bg-gray-300"><i class="fas fa-ellipsis-v"></i></button>
@@ -75,6 +89,8 @@
                             <x-dropdown-link wire:click="destroy({{ $answer->id }})">Eliminar</x-dropdown-link>
                         </x-slot>
                     </x-dropdown>
+
+                    
                 </div>
                 
             </li>

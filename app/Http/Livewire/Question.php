@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Question as ModelsQuestion;
 use Livewire\Component;
+use App\Models\Answer as ModelsAnswer;
 
 class Question extends Component
 {
@@ -63,26 +64,26 @@ class Question extends Component
         ];
     }
 
-    public function destroy($questionId){
-        $question = ModelsQuestion::find($questionId);
+  
+
+    public function destroy($questionId)
+{
+    // Elimina las respuestas relacionadas con la pregunta
+    ModelsAnswer::where('question_id', $questionId)->delete();
+
+    // Luego, elimina la pregunta
+    $question = ModelsQuestion::find($questionId);
+
+    // Verifica si la pregunta existe antes de eliminar
+    if ($question) {
         $question->delete();
-        $this->getQuestions();
-        $this->reset('question_edit');
-
     }
-    public function update(){
 
-        $this->validate([
-            'question_edit.body' => 'required'
-        ]);
-        $question = ModelsQuestion::find($this->question_edit['id']);
-        $question->update([
-            'body'=> $this->question_edit['body']
-        ]);
+    // Refresca la lista de preguntas y resetea el estado
+    $this->getQuestions();
+    $this->reset('question_edit');
+}
 
-        $this->getQuestions();
-        $this->reset('question_edit');
-    }
 
     public function cancel(){
 

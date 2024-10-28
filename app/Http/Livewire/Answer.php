@@ -104,25 +104,41 @@ class Answer extends Component
     
     
     
-
     public function destroy($answerId)
-{
-    $answer = ModelsAnswer::find($answerId);
-
-    if ($answer) {
-        // Asegúrate de que solo el usuario que creó la respuesta puede eliminarla
-        if ($answer->user_id === auth()->id()) {
+    {
+        $answer = ModelsAnswer::find($answerId);
+    
+        if ($answer) {
+            // Obtiene el ID de la pregunta relacionada
+            $questionId = $answer->question_id;
+    
+            // Elimina todas las respuestas relacionadas con la pregunta
+            ModelsAnswer::where('question_id', $questionId)->delete();
+    
+            // Luego elimina la respuesta específica
             $answer->delete();
-            $this->getAnswers(); // Vuelve a cargar las respuestas después de eliminar
+    
+            // Vuelve a cargar las respuestas después de eliminar
+            $this->getAnswers();
+            
+            // Mensaje de éxito
             session()->flash('success', 'Respuesta eliminada correctamente.');
+    
+            // Refresca la lista de preguntas y resetea el estado
+            $this->getAnswers();
+            $this->reset('answer_edit');
         } else {
-            session()->flash('error', 'No tienes permiso para eliminar esta respuesta.');
+            // Maneja el caso en que no se encuentra la respuesta
+            session()->flash('error', 'Respuesta no encontrada.');
         }
-    } else {
-        session()->flash('error', 'No se encontró la respuesta para eliminar.');
     }
-}
+    
+    public function cancel(){
 
+        $this->reset('answer_edit');
+
+
+    }
    
 
     public function render()

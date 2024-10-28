@@ -21,6 +21,7 @@ return new class extends Migration
             $table->morphs('questionable');
 
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            
 
             $table->timestamps();
         });
