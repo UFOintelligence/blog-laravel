@@ -5,9 +5,12 @@
 
     @if ($answers_created['open'])
         <div class="mt-4 flex items-start">
+            @auth
+            
             <figure class="mr-4">
                 <img src="{{ auth()->user()->profile_photo_url }}" alt="{{ auth()->user()->name }}" class="rounded-full h-12 w-12">
             </figure>
+            @endauth
             <div class="flex-1">
                 <form wire:submit.prevent="store">
                     <textarea wire:model="answers_created.body" class="mt-1 w-full" placeholder="Escribe tu respuesta"></textarea>
@@ -34,20 +37,25 @@
                             <span class="text-sm text-gray-500 ml-2">{{ $answer->created_at->diffForHumans() }}</span>
                         </p>
                         <p class="text-gray-700">{{ $answer->body }}</p>
-                        
+                
                         
                         <!-- Botón para responder a esta respuesta -->
                         <button wire:click="$set('answer_to_answer.id', {{ $answer->id }})" class="text-gray-900 bg-gray-200 hover:bg-gray-300">
                             <i class="fas fa-reply"></i> Responder
                         </button>
                         
+                        
 
                         <!-- Formulario de respuesta a una respuesta -->
                         @if ($answer_to_answer['id'] === $answer->id)
                             <div class="mt-4 flex items-start">
+                                @auth
+                                    
                                 <figure class="mr-4">
                                     <img src="{{ auth()->user()->profile_photo_url }}" alt="{{ auth()->user()->name }}" class="rounded-full h-12 w-12">
                                 </figure>
+                                @endauth
+
                                 <div class="flex-1">
                                     <form wire:submit.prevent="storeReply">
                                         <textarea wire:model="answer_to_answer.body" class="mt-1 w-full" placeholder="Escribe tu respuesta"></textarea>
@@ -95,5 +103,15 @@
                 
             </li>
         @endforeach
+         <!-- Botón para cargar más comentarios -->
+         @if ($this->question->answers()->count() > $limit)
+         <div class="flex justify-center mt-4">
+             <button wire:click="loadMoreAnswer" class="text-gray py-2 px-4 rounded-lg shadow-md hover:text-blue-600">
+                 Ver más respuestas
+             </button>
+         </div>
+     @endif
     </ul>
+    <!-- Botón para cargar más comentarios -->
+
 </div>

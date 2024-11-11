@@ -21,9 +21,9 @@
     </div>
 
     <!-- Título de sección de comentarios -->
-    <p class="text-lg font-semibold mt-6 mb-4">
-        Comentarios:
-    </p>
+<p class="text-lg font-semibold mt-6 mb-4">
+    <i class="fa fa-solid fa-comment mr-1"></i> {{ $totalComments }}
+</p>
 
     <!-- Lista de comentarios -->
     <ul class="space-y-6">
@@ -94,4 +94,12 @@
         </li>
         @endforeach
     </ul>
+    <!-- Botón para cargar más comentarios -->
+@if ($this->model->questions()->count() > $limit)
+<div class="flex justify-center mt-4">
+    <button wire:click="loadMore" class="text-gray py-2 px-4 rounded-lg shadow-md hover:text-blue-600">
+        Ver más comentarios
+    </button>
+</div>
+@endif
 </div>

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('body');
 
             $table->foreignId('question_id')->constrained()->cascadeOnDelete;
-            
+            $table->unsignedBigInteger('parent_id')->nullable();
             $table->foreign('parent_id')->references('id')->on('answers')->onDelete('cascade');
 
             $table->foreignId('user_id')->constrained()->cascadeOnDelete;

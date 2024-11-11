@@ -12,6 +12,8 @@ class Question extends Component
     public $model;
     public $message;
     public $questions;
+    public $limit = 10;
+    public $totalComments;
     public $question_edit = [
         'id' => null,
         'body' =>  ''
@@ -25,16 +27,22 @@ class Question extends Component
 
     public function getQuestions()
     {
-
+        $this->totalComments = $this->model->questions()->count();
         $this->questions = $this->model
         ->questions()
         ->orderBy('created_at', 'desc')
+        ->take($this->limit)
         ->get();
 
 
 
     }
-
+    public function loadMore()
+    {
+        // Incrementa el límite de comentarios y recarga la lista
+        $this->limit += 10;
+        $this->getQuestions();
+    }
 
 
     public function store()

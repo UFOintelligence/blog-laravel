@@ -13,7 +13,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
 
             <!-- Filtros (Sidebar) -->
-            <div class="col-span-1 bg-white shadow-lg rounded-lg p-4 n transition-transform hover:scale-105 duration-300 relative overflow-hidden">
+            <div class="col-span-1 bg-white shadow-lg  rounded-lg p-4 n transition-transform hover:scale-105 duration-300 relative overflow-hidden">
                 <form action="{{ route('home') }}" method="GET">
                     <!-- Filtro de búsqueda -->
                     <div class="mb-4">
@@ -53,7 +53,7 @@
             </div>
 
             <!-- Publicaciones -->
-            <div class="col-span-2 space-y-8 mt-8">
+            <div class="col-span-3 space-y-8 mt-8">
                 @foreach ($posts as $post)
                     <article class="grid grid-cols-1 sm:grid-cols-2 gap-6 bg-white shadow-lg rounded-lg p-6 transition-transform hover:scale-105 duration-300 relative overflow-hidden">
                         <!-- Fondo de tarjeta -->
@@ -98,7 +98,7 @@
                 @endforeach
             </div>
  <!-- Lista de usuarios con opción de chat -->
- <div class="col-span-1 bg-white shadow-lg rounded-lg p-6 " x-data="{ openChat: null }">
+ {{-- <div class="col-span-1 bg-white shadow-lg rounded-lg p-6 " x-data="{ openChat: null }">
     <ul class="max-w-md divide-y divide-gray-200 dark:divide-gray-700">
         <div class="flex justify-center">
             <h1>Chat</h1>
@@ -140,9 +140,9 @@
        
         @endforeach
     </ul>
-</div>
+</div> --}}
 
-</div>
+
 
 
 

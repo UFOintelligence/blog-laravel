@@ -4,11 +4,16 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Models\Answer as ModelsAnswer;
 
+// use function Termwind\ask;
+
 class Answer extends Component
 {
     public $question;
     public $answers;
+    public $limit = 3;
+    public $model;
 
+    
     public $answers_created = [
         'open' => false,
         'body' => '',
@@ -32,7 +37,13 @@ class Answer extends Component
 
     public function getAnswers()
     {
-        $this->answers = $this->question->answers()->orderBy('id', 'asc')->get();
+    
+        $this->answers = $this->question->answers()->orderBy('id', 'asc')->take($this->limit)->get();
+    }
+    public function loadMoreAnswer(){
+
+        $this->limit += 3;
+        $this->getAnswers();
     }
 
     public function edit($answerId)
@@ -103,28 +114,36 @@ class Answer extends Component
     }
     
     
+    
     public function destroy($answerId)
-{
-    $answer = ModelsAnswer::find($answerId);
-
-    if ($answer) {
-        // Elimina todas las respuestas hijas de la respuesta actual
-        ModelsAnswer::where('parent_id', $answer->id)->delete();
-        
-        // Luego elimina la respuesta específica
-        $answer->delete();
-
-        // Vuelve a cargar las respuestas después de eliminar
-        $this->getAnswers();
-
-        // Mensaje de éxito
-        session()->flash('success', 'Respuesta eliminada correctamente.');
-    } else {
-        // Maneja el caso en que no se encuentra la respuesta
-        session()->flash('error', 'Respuesta no encontrada.');
+    {
+        $answer = ModelsAnswer::find($answerId);
+    
+        if ($answer) {
+            // Obtiene el ID de la pregunta relacionada
+            $questionId = $answer->question_id;
+    
+            // Elimina todas las respuestas relacionadas con la pregunta
+            ModelsAnswer::where('question_id', $questionId)->delete();
+    
+            // Luego elimina la respuesta específica
+            $answer->delete();
+    
+            // Vuelve a cargar las respuestas después de eliminar
+            $this->getAnswers();
+            
+            // Mensaje de éxito
+            session()->flash('success', 'Respuesta eliminada correctamente.');
+    
+            // Refresca la lista de preguntas y resetea el estado
+            $this->getAnswers();
+            $this->reset('answer_edit');
+        } else {
+            // Maneja el caso en que no se encuentra la respuesta
+            session()->flash('error', 'Respuesta no encontrada.');
+        }
     }
-}
-
+    
     public function cancel(){
 
         $this->reset('answer_edit');

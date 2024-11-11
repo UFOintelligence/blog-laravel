@@ -44,7 +44,7 @@
         <!-- Botón para volver a la lista -->
         <div class="mt-8">
             <a href="{{ route('home') }}" class="inline-flex items-center px-4 py-2 text-sm font-semibold text-white bg-black hover:black rounded-lg transition duration-200">
-                <i class="fas fa-reply"></i> Volver a Publicaciones
+                <i class="fas fa-reply mr-1"></i> Volver a Publicaciones
             </a>
         </div>
     </section>
