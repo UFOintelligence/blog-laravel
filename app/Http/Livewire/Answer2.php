@@ -10,11 +10,9 @@ class Answer extends Component
 {
     public $question;
     public $answers;
-    public $limit = 2;
-    public $model;
-    public $hasMoreAnswers = false;
+    public $limit = 3;
     public $latestAnswer;
-
+    public $model;
 
     
     public $answers_created = [
@@ -37,24 +35,29 @@ class Answer extends Component
     {
         $this->getAnswers();
     }
+
     public function getAnswers()
     {
-        // Obtener la última respuesta
-        $this->latestAnswer = $this->question->answers()->latest('id')->first();
+
+    
+            // Obtener la última respuesta
+            $this->latestAnswer = $this->question->answers()->latest('id')->first();
+            
+            // Obtener las respuestas limitadas excluyendo la última
+            $this->answers = $this->question->answers()
+                ->where('id', '<>', optional($this->latestAnswer)->id)
+                ->orderBy('id', 'asc')
+                ->take($this->limit)
+                ->get();
         
-        // Obtener las respuestas limitadas excluyendo la última
-        $this->answers = $this->question->answers()
-            ->where('id', '<>', optional($this->latestAnswer)->id)
-            ->orderBy('id', 'asc')
-            ->take($this->limit)
-            ->get();
         
-        // Verificar si hay más respuestas de las que se muestran actualmente
-        $this->hasMoreAnswers = $this->question->answers()->count() > ($this->answers->count() + 1); // +1 para incluir latestAnswer
+
     }
 
-    public function loadMoreAnswer()
-    {
+
+
+    public function loadMoreAnswer(){
+
         $this->limit += 3;
         $this->getAnswers();
     }
@@ -137,7 +140,7 @@ class Answer extends Component
             $questionId = $answer->question_id;
     
             // Elimina todas las respuestas relacionadas con la pregunta
-            ModelsAnswer::where('parent_id', $answerId)->delete();
+            ModelsAnswer::where('question_id', $questionId)->delete();
     
             // Luego elimina la respuesta específica
             $answer->delete();
@@ -167,8 +170,6 @@ class Answer extends Component
 
     public function render()
     {
-        return view('livewire.answer', [
-            'hasMoreAnswers' => $this->hasMoreAnswers
-        ]);
+        return view('livewire.answer');
     }
 }

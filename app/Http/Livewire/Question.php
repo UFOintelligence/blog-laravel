@@ -11,7 +11,6 @@ class Question extends Component
 
     public $model;
     public $message;
-    public $questions;
     public $limit = 10;
     public $totalComments;
     public $question_edit = [
@@ -20,28 +19,43 @@ class Question extends Component
     ];
 
 
-    public function mount(){
-        $this->getQuestions();
-    }
+  
 
-
-    public function getQuestions()
-    {
-        $this->totalComments = $this->model->questions()->count();
-        $this->questions = $this->model
-        ->questions()
-        ->orderBy('created_at', 'desc')
-        ->take($this->limit)
-        ->get();
-
-
-
-    }
+      // Propiedad computada para questions
+      public function getQuestionsProperty()
+      { 
+          $this->totalComments = $this->model->questions()->count();
+  
+          return $this->model
+              ->questions()
+              ->orderBy('created_at', 'desc')
+              ->take($this->limit)
+              ->get();
+      }
+      public function update()
+      {
+          $this->validate([
+              'question_edit.body' => 'required',
+          ]);
+  
+          $question = ModelsQuestion::find($this->question_edit['id']);
+  
+          if ($question) {
+              $question->update([
+                  'body' => $this->question_edit['body'],
+                  'user_id' => auth()->id(),
+              ]);
+  
+              $this->reset('question_edit');
+          } else {
+              session()->flash('error', 'No se encontró la respuesta para actualizar.');
+          }
+      }
     public function loadMore()
     {
         // Incrementa el límite de comentarios y recarga la lista
         $this->limit += 10;
-        $this->getQuestions();
+        
     }
 
 
@@ -56,10 +70,12 @@ class Question extends Component
             'user_id'=> auth()->id()
         ]);
 
-        $this->getQuestions();
+        
 
 
         $this->message = '';
+    // Actualiza el total de comentarios
+    $this->totalComments = $this->model->questions()->count();
 
 
     }
@@ -87,8 +103,11 @@ class Question extends Component
         $question->delete();
     }
 
+        // Actualiza el total de comentarios
+        $this->totalComments = $this->model->questions()->count();
+
     // Refresca la lista de preguntas y resetea el estado
-    $this->getQuestions();
+    
     $this->reset('question_edit');
 }
 
@@ -103,6 +122,9 @@ class Question extends Component
 
     public function render()
     {
+            // Actualiza el total de comentarios
+    $this->totalComments = $this->model->questions()->count();
+
         return view('livewire.question');
     }
 }

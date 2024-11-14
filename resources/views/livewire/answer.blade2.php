@@ -185,16 +185,14 @@
                 
             </li>
         @endforeach
-    <!-- Botón para cargar más respuestas -->
-@if ($hasMoreAnswers)
-<div class="flex justify-center mt-4">
-    <button wire:click="loadMoreAnswer" class="text-gray py-2 px-4 rounded-lg shadow-md hover:text-blue-600">
-        Ver más respuestas
-    </button>
-</div>
-@endif
-
-
+         <!-- Botón para cargar más comentarios -->
+         @if ($this->question->answers()->count() > $limit)
+         <div class="flex justify-center mt-4">
+             <button wire:click="loadMoreAnswer" class="text-gray py-2 px-4 rounded-lg shadow-md hover:text-blue-600">
+                 Ver más respuestas
+             </button>
+         </div>
+     @endif
     </ul>
     <!-- Botón para cargar más comentarios -->
 

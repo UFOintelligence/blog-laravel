@@ -27,7 +27,7 @@
 
     <!-- Lista de comentarios -->
     <ul class="space-y-6">
-        @foreach ($questions as $question)
+        @foreach ($this->questions as $question)
         <li wire:key="question-{{ $question->id }}" class="p-4 bg-white rounded-lg shadow-sm"> <!-- Color de fondo para cada comentario -->
             <div class="flex items-start">
                 <!-- Imagen de perfil del comentario -->
