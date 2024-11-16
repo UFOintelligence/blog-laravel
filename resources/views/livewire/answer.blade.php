@@ -26,6 +26,7 @@
     <ul class="space-y-6">
      <!-- Mostrar la última respuesta si existe -->
      @if ($latestAnswer)
+     @if(auth()->id())
      <li wire:key="answer-{{ $latestAnswer->id }}" class="p-4 bg-white rounded-lg shadow-sm">
          <div class="flex items-start">
              <figure class="mr-4">
@@ -44,8 +45,7 @@
                      <i class="fas fa-reply"></i> Responder
                  </button>
                  
-                 
-
+                
                  <!-- Formulario de respuesta a una respuesta -->
                  @if ($answer_to_answer['id'] === $latestAnswer->id)
                      <div class="mt-4 flex items-start">
@@ -68,6 +68,7 @@
                              
                          </div>
                          
+                         
                      </div>
 
                      
@@ -87,7 +88,7 @@
               </form>
               @endif
              </div>
-             
+             @if($latestAnswer->user_id == auth()->id())
              <x-dropdown>
                  <x-slot name="trigger">
                      <button type="button" class="text-gray-900 bg-gray-200 hover:bg-gray-300"><i class="fas fa-ellipsis-v"></i></button>
@@ -97,11 +98,13 @@
                      <x-dropdown-link wire:click="destroy({{ $latestAnswer->id }})">Eliminar</x-dropdown-link>
                  </x-slot>
              </x-dropdown>
+             @endif
 
              
          </div>
          
      </li>
+     @endif
      @endif
     </ul>
 
@@ -109,6 +112,7 @@
     <ul class="space-y-6">
         @foreach ($answers as $answer)
             <li wire:key="answer-{{ $answer->id }}" class="p-4 bg-white rounded-lg shadow-sm">
+                @if(auth()->id())
                 <div class="flex items-start">
                     <figure class="mr-4">
                         <img class="w-12 h-12 rounded-full" src="{{ $answer->user->profile_photo_url }}" alt="{{ $answer->user->name }}">
@@ -169,7 +173,7 @@
                      </form>
                      @endif
                     </div>
-                    
+                    @if($answer->user_id == auth()->id())
                     <x-dropdown>
                         <x-slot name="trigger">
                             <button type="button" class="text-gray-900 bg-gray-200 hover:bg-gray-300"><i class="fas fa-ellipsis-v"></i></button>
@@ -179,9 +183,12 @@
                             <x-dropdown-link wire:click="destroy({{ $answer->id }})">Eliminar</x-dropdown-link>
                         </x-slot>
                     </x-dropdown>
+                    @endif
 
                     
                 </div>
+           @endif
+
                 
             </li>
         @endforeach

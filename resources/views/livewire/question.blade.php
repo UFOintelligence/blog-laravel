@@ -1,5 +1,6 @@
 <div class="bg-gray-100 shadow-md rounded-lg p-6"> <!-- Color de fondo cambiado -->
     <!-- Comentario del usuario actual -->
+    @if(auth()->id())
     <div class="flex items-start mb-6">
         <!-- Imagen de perfil del usuario -->
         <figure class="mr-4">
@@ -19,10 +20,11 @@
             </form>
         </div>
     </div>
+    @endif
 
     <!-- Título de sección de comentarios -->
 <p class="text-lg font-semibold mt-6 mb-4">
-    <i class="fa fa-solid fa-comment mr-1"></i> {{ $totalComments }}
+    <i class="fa fa-solid fa-comment mr-1"></i>  Cometarios {{ $totalComments }}
 </p>
 
     <!-- Lista de comentarios -->
@@ -67,6 +69,7 @@
                 </div>
 
                 <!-- Menú desplegable de acciones (Editar/Eliminar) -->
+                @if ($question->user_id == auth()->id())
                 <div class="ml-4">
                     <x-dropdown>
                         <x-slot name="trigger">
@@ -85,6 +88,7 @@
                         </x-slot>
                     </x-dropdown>
                 </div>
+                @endif
             </div>
 
             <!-- Respuestas al comentario -->
