@@ -19,12 +19,15 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
          <!-- Sweetalert2 -->
       <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11">
+      
 
     </script>
 
         <!-- Styles -->
         @livewireStyles
         @stack('css')
+              <!--summernote -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.css" rel="stylesheet">
     </head>
     <body class="font-sans antialiased sm:overflow-auto"
     :class="{'overflow-hidden': open}" x-data="{open: false}">
@@ -87,9 +90,18 @@
 
   @stack('js')
 
-     <!-- ckeditor -->
+    <!-- Incluye Summernote -->
+ 
 
-
+    @push('js')
+   
+    
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> --}}
+    
+    
+    @endpush
+  
+  
     </body>
 
 </html>

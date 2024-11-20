@@ -33,7 +33,9 @@
 
         <!-- Body Content -->
         <div class="prose max-w-none text-gray-900 leading-relaxed mb-6">
-            {!! nl2br(e($post->body)) !!}
+            {{-- {!! nl2br(e($post->body)) !!} --}}
+
+            <p id="summernote1"> {!!$post->body !!}</p> 
         </div>
 
         <!-- Comments Section -->
@@ -47,5 +49,43 @@
                 <i class="fas fa-reply mr-1"></i> Volver a Publicaciones
             </a>
         </div>
+        @push('css')
+        {{-- <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css" rel="stylesheet">
+        <!-- Agregar tema adicional si lo prefieres -->
+        <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-okaidia.min.css" rel="stylesheet">
+           <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css"> --}}
+    @endpush
+    
+    @push('js')
+    
+        {{-- <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-java.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-php.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-css.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-html.min.js"></script> --}}
+        
+        <script>
+            
+            $(document).ready(function() {
+                $('#summernote1').summernote({
+                    height: 300, // Altura del editor
+                    toolbar: [
+                        ['style', ['style']],
+                        ['font', ['bold', 'italic', 'underline']],
+                        ['insert', ['link', 'picture', 'video']],
+                        ['view', ['fullscreen', 'codeview', 'help']],
+                        ['misc', ['code']] // Añade el botón para insertar código
+                    ],
+                    
+        
+                });
+            });
+            // ['view', ['fullscreen', 'codeview', 'help']],
+        </script>
+    @endpush
+    
+     
     </section>
 </x-app-layout>

@@ -35,7 +35,7 @@
              <div class="flex-1">
                  <p class="font-semibold">
                      {{ $latestAnswer->user->name }}
-                     <span class="text-sm text-gray-500 ml-2">{{ $latestAnswer->created_at->diffForHumans() }}</span>
+                     <span class="text-sm text-gray-500 ml-2" wire:ignore>{{ $latestAnswer->created_at->diffForHumans() }}</span>
                  </p>
                  <p class="text-gray-700">{{ $latestAnswer->body }}</p>
          
@@ -117,10 +117,10 @@
                     <figure class="mr-4">
                         <img class="w-12 h-12 rounded-full" src="{{ $answer->user->profile_photo_url }}" alt="{{ $answer->user->name }}">
                     </figure>
-                    <div class="flex-1">
+                    <div class="flex-1" >
                         <p class="font-semibold">
                             {{ $answer->user->name }}
-                            <span class="text-sm text-gray-500 ml-2">{{ $answer->created_at->diffForHumans() }}</span>
+                            <span class="text-sm text-gray-500 ml-2" wire:ignore>{{ $answer->created_at->diffForHumans() }}</span>
                         </p>
                         <p class="text-gray-700">{{ $answer->body }}</p>
                 
@@ -203,6 +203,5 @@
 
 
     </ul>
-    <!-- Botón para cargar más comentarios -->
 
 </div>

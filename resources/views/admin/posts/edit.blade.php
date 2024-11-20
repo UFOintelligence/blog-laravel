@@ -111,7 +111,7 @@
             <x-label class="mb-1">
                 Cuerpo
             </x-label>
-            <x-textarea id="editor" class="w-full" rows="12" name="body"> {{ old('body', $post->body) }}
+            <x-textarea  class="w-full" rows="12" name="body" id="summernote"> {{ old('body', $post->body) }}
             </x-textarea>
 
         </div>
@@ -151,8 +151,31 @@
     </form>
 
     @push('js')
-        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+       
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+     {{-- editor summernote --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+       
+
+<!-- include libraries(jQuery, bootstrap) -->
+{{-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet"> 
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> --}}
+
+<!-- include codemirror (codemirror.css, codemirror.js, xml.js, formatting.js) -->
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/codemirror.css">
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/theme/monokai.css">
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/codemirror.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/mode/xml/xml.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/2.36.0/formatting.js"></script>
+
+<!-- include summernote css/js-->
+{{-- <link href="summernote.css">
+<script src="summernote.js"></script> --}}
+
+
 
 
         <script>
@@ -212,7 +235,32 @@
                 $imgPreview.src = objectURL;
 
             }
-        </script>
+
+           
+      
+    $(document).ready(function() {
+        $('#summernote').summernote({
+            height: 300, // Altura del editor
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'italic', 'underline']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['fullscreen', 'help']]
+                 ['misc', ['code']] // Añade el botón para insertar código
+            ]
+
+        });
+    });
+
+    $('#summernote').summernote({
+  height: 150, //set editable area's height
+  codemirror: { // codemirror options
+    theme: 'monokai'
+  }
+});
+</script>
+
+
     @endpush
 
 </x-admin-layout>
