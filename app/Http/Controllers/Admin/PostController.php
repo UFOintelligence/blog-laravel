@@ -144,18 +144,18 @@ class PostController extends Controller
 
              $file_name = $request->slug . '.' . $request->file('image')->getClientOriginalExtension();
 
-        //  $data ['image_path'] =  Storage::disk('public')->putFileAs('posts', $request->image, $file_name, 'public');
-         
-         $data['image_path'] = Storage::disk('public')->putFileAs('posts', $request->file('image'), $file_name);
-
-            // $data ['image_path'] = $request->file('image')->storeAs('posts', $file_name,
-            //  ['disk'=> 's3', 'visibility' => 'public']);
+             $data['image_path'] = $request->file('image')->storeAs(
+                'posts', // Carpeta donde se almacenará
+                $file_name, // Nombre del archivo
+                'public' // Disco configurado
+            );
+            
+       
 
 
          }
 
         $post->update($data);
-        //$post->update($request->all());
         session()->flash('swal', [
             'icon' => 'success',
             'title' => '¡Bien hecho!',

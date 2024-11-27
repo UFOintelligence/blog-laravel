@@ -53,7 +53,7 @@
             </x-label>
 
             <x-input class="w-full" placeholder="Escriba el titulo del post" name="title"
-                value="{{ old('title', $post->title) }}"></x-input>
+                value="{{ old('title', $post->title ) }}"></x-input>
         </div>
 
 
@@ -84,7 +84,7 @@
             <x-label class="mb-1">
                 Resumen
             </x-label>
-            <x-textarea class="w-full" name="excerpt"> {{ old('excerpt', $post->excerpt) }} </x-textarea>
+            <x-textarea class="summernote w-full" name="excerpt"> {{ old('excerpt', $post->excerpt) }} </x-textarea>
         </div>
 
 
@@ -111,7 +111,7 @@
             <x-label class="mb-1">
                 Cuerpo
             </x-label>
-            <x-textarea  class="w-full" rows="12" name="body" id="summernote"> {{ old('body', $post->body) }}
+            <x-textarea  class="summernote w-full" rows="12" name="body" id="summernote"> {{ old('body', $post->body) }}
             </x-textarea>
 
         </div>
@@ -239,7 +239,7 @@
            
       
     $(document).ready(function() {
-        $('#summernote').summernote({
+        $('.summernote').summernote({
             height: 300, // Altura del editor
             toolbar: [
                 ['style', ['style']],
@@ -252,7 +252,7 @@
         });
     });
 
-    $('#summernote').summernote({
+    $('.summernote').summernote({
   height: 150, //set editable area's height
   codemirror: { // codemirror options
     theme: 'monokai'

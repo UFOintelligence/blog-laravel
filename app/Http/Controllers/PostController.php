@@ -24,4 +24,28 @@ class PostController extends Controller
         //
         return view('posts.show', compact('post'));
     }
+
+    public function getRouteKeyName()
+{
+    return 'slug';
+}
+
+
+    public function searchAutocomplete(Request $request)
+    {
+        $query = $request->input('query');
+    
+       $results = \App\Models\Post::where('title', 'LIKE', "%{$query}%")
+    ->take(10)
+    ->get(['id', 'title', 'slug'])
+    ->map(function ($post) {
+        return [
+            'title' => $post->title,
+            'url' => route('posts.show', $post), // Laravel generará la URL usando el método getRouteKeyName
+        ];
+    });
+
+return response()->json($results);
+
+    }
 }

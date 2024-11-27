@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Post;
 use Spatie\Permission\Models\Role;
 use Illuminate\Http\Request;
 
@@ -88,6 +89,19 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+
+          // Elimina todos los posts relacionados con el usuario
+    
+    
+    Post::where('user_id', $user->id)->delete();
         //
+        $user->delete();
+        session()->flash('swal', [
+            'icon' => 'success',
+            'title' => '¡Bien hecho!',
+            'text' => 'el usuario se eliminó corretamente'
+        ]);
+
+        return redirect()->route('admin.users.index', $user);
     }
 }

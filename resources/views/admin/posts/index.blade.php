@@ -34,7 +34,7 @@
 
             <div>
                 <a href="{{route('admin.posts.edit', $post)}}" class="text-xl font-semibold">
-                    {{$post->title}}
+                    {!! $post->title !!}
 
                 </a>
                     <hr class="mb-1 mt-1">
@@ -46,9 +46,9 @@
                     </span>
 
                     <p class="text-gray-700 mt-2">
-                        {{Str::limit($post->excerpt, 100)}}
-
+                        {{ Str::limit(strip_tags($post->excerpt), 100) }}
                     </p>
+                    
 
                     <div class="flex flex-end">
 

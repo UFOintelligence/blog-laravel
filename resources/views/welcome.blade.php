@@ -18,7 +18,7 @@
                     <!-- Filtro de búsqueda -->
                     <div class="mb-4">
                         <p class="text-lg font-semibold">Buscar:</p>
-                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Buscar publicaciones..."
+                        <input type="text" name="search" value="" placeholder="Buscar publicaciones..."
                                class="w-full border-gray-300 rounded-md shadow-sm">
                     </div>
 
@@ -63,14 +63,14 @@
                         <div class="relative z-10">
                             <figure>
                                 <img class="aspect-[15/10]  object-cover object-center w-full rounded-lg transition-all hover:scale-105"
-                                     alt="{{ $post->title }}" src="{{ $post->image }}">
+                                     alt=" {!! $post->title !!}" src="{{ $post->image }}">
                             </figure>
                         </div>
 
                         <!-- Contenido -->
                         <div class="relative z-10 flex flex-col justify-between">
                             <div>
-                                <h1 class="text-xl font-semibold text-gray-900">{{ $post->title }}</h1>
+                                <h1 class="text-xl font-semibold text-gray-900">{!! $post->title !!}</h1>
                                 <hr class="mt-1 mb-2">
 
                                 <!-- Etiquetas -->
@@ -86,7 +86,8 @@
                                 <p class="text-sm text-gray-500 mb-2">{{ $post->published_at->format('d M Y') }}</p>
 
                                 <!-- Extracto -->
-                                <div class="mb-8">{{ Str::limit($post->excerpt, 100) }}</div>
+                                <div class="mb-8">{{ Str::limit(strip_tags($post->excerpt), 100) }}</div>
+
                             </div>
 
                             <!-- Botón Ver más -->
@@ -150,4 +151,5 @@
 <div class="mt-4">{{ $posts->links() }}</div>
 </section>
 
+    
 </x-app-layout>

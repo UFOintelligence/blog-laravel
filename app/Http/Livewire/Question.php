@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Events\CommentCreated;
 use App\Models\Question as ModelsQuestion;
 use Livewire\Component;
 use App\Models\Answer as ModelsAnswer;
@@ -65,10 +66,12 @@ class Question extends Component
             'message' => 'required'
         ]);
 
-        $this->model->questions()->create([
+       $question = $this->model->questions()->create([
             'body' => $this->message,
             'user_id'=> auth()->id()
         ]);
+
+        CommentCreated::dispatch($question);
 
         
 

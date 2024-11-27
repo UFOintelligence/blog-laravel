@@ -13,7 +13,7 @@
             @endauth
             <div class="flex-1">
                 <form wire:submit.prevent="store">
-                    <textarea wire:model="answers_created.body" class="mt-1 w-full" placeholder="Escribe tu respuesta"></textarea>
+                    <textarea wire:model="answers_created.body" class="summernote mt-1 w-full" placeholder="Escribe tu respuesta"></textarea>
                     <x-input-error for="answers_created.body" class="mt-2"/>
                     <div class="flex justify-end mt-2">
                         <x-danger-button class="mr-2" wire:click="$set('answers_created.open', false)">Cancelar</x-danger-button>
@@ -58,7 +58,7 @@
 
                          <div class="flex-1">
                              <form wire:submit.prevent="storeReply">
-                                 <textarea wire:model="answer_to_answer.body" class="mt-1 w-full" placeholder="Escribe tu respuesta"></textarea>
+                                 <textarea wire:model="answer_to_answer.body" class="summernote mt-1 w-full" placeholder="Escribe tu respuesta"></textarea>
                                  <x-input-error for="answer_to_answer.body" class="mt-2"/>
                                  <div class="flex justify-end mt-2">
                                      <x-danger-button wire:click="$set('answer_to_answer.id', null)" class="mr-1">Cancelar</x-danger-button>
@@ -161,7 +161,7 @@
                          <!-- Edición de la respuesta si está en modo de edición -->
                      @if ($answer->id == $answer_edit['id'])
                      <form wire:submit.prevent="update">
-                         <textarea  wire:model="answer_edit.body" rows="2" class=" mt-1 border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm w-full resize-none" placeholder="Editar comentario"></textarea>
+                         <textarea  wire:model="answer_edit.body" rows="2" class="summernote mt-1 border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm w-full resize-none" placeholder="Editar comentario"></textarea>
  
                          <x-input-error for="answer_edit.body" class="mt-2"/>
  
